@@ -239,6 +239,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    simple_form (5.2.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -278,7 +281,7 @@ DEPENDENCIES
   bootsnap
   bootstrap (~> 5.2.3)
   debug
-  devise
+  devise (~> 4.9, >= 4.9.2)
   dotenv-rails
   fuubar
   importmap-rails
@@ -291,6 +294,7 @@ DEPENDENCIES
   redis (~> 4.0)
   rspec-rails
   rubocop-rails
+  simple_form
   sprockets-rails
   stimulus-rails
   turbo-rails
