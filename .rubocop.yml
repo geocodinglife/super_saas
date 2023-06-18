@@ -1,0 +1,45 @@
+# .rubocop.yml
+
+# AllCops
+AllCops:
+  Exclude:
+    - 'vendor/**/*' # Exclude vendor directory
+    - 'spec/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'db/migrate/**/*'
+    - 'config.ru'
+    - 'Rakefile'
+    - 'db/schema.rb'
+# Style/Documentation
+Style/Documentation:
+  Enabled: false
+  AllowLeadingHashComment: false
+  AllowTrailingHashComment: true
+
+# Layout/LineLength
+Layout/LineLength:
+  Max: 120
+
+# Naming/FileName
+Naming/FileName:
+  Exclude:
+    - 'db/migrate/**/*' # Exclude database migration files
+    - 'config/**/*'
+    - 'spec/**/*'
+    - 'config.ru'
+    - 'db/schema.rb'
+
+
+# Metrics/MethodLength
+Metrics/MethodLength:
+  Max: 15
+  CountComments: false
+
+# Lint/UselessAssignment
+Lint/UselessAssignment:
+  Exclude:
+    - 'spec/**/*' # Exclude spec files
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
