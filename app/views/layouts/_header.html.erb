@@ -12,12 +12,25 @@
             Home
           <% end %>
         </li>
-                <li class="<%= 'active font-weight-bold' if current_page?(users_path) %> nav-item">
+        <li class="<%= 'active font-weight-bold' if current_page?(users_path) %> nav-item">
           <%= link_to users_path, class: 'nav-link' do %>
             <div class="fa fa-users"></div>
             Users
           <% end %>
         </li>
+        <li class="<%= 'active font-weight-bold' if current_page?(tenants_path) %> nav-item">
+          <%= link_to tenants_path, class: 'nav-link' do %>
+            <div class="fa fa-users"></div>
+            Tenants
+          <% end %>
+        </li>
+        <li class="<%= 'active font-weight-bold' if current_page?(new_tenant_path) %> nav-item">
+          <%= link_to new_tenant_path, class: 'nav-link' do %>
+            <div class="fa fa-users"></div>
+            New Tenant
+          <% end %>
+        </li>
+
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
