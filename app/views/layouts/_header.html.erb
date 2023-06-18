@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Navbar</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <% if current_user %>
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item <%= 'active font-weight-bold' if current_page?(root_path) %>">
+          <%= link_to root_path, class: 'nav-link' do %>
+            <i class="fa fa-home"></i>
+            Home
+          <% end %>
+        </li>
+                <li class="<%= 'active font-weight-bold' if current_page?(users_path) %> nav-item">
+          <%= link_to users_path, class: 'nav-link' do %>
+            <div class="fa fa-users"></div>
+            Users
+          <% end %>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <b><%= current_user.email %></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <%= link_to edit_user_registration_path, class: "dropdown-item #{'active' if current_page?(edit_user_registration_path)}" do %>
+              <i class="fa fa-cog"></i>
+              <b>Account settings</b>
+            <% end %>
+            <%= button_to destroy_user_session_path, method: :delete, class: "dropdown-item" do |form| %>
+              <i class="fa fa-sign-out-alt"></i>
+              <b>Sign out</b>
+            <% end %>
+
+          </ul>
+        </li>
+      </ul>
+    <% else %>
+      <ul class="navbar-nav me-auto"></ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item <%= 'active font-weight-bold' if current_page?(new_user_registration_path) %>">
+          <%= link_to 'Register', new_user_registration_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item <%= 'active font-weight-bold' if current_page?(new_user_session_path) %>">
+          <%= link_to 'Login', new_user_session_path, class: 'nav-link' %>
+        </li>
+      </ul>
+    <% end %>
+  </div>
+</nav>
