@@ -5,6 +5,11 @@ class TenantsController < ApplicationController
     @tenants = Tenant.all
   end
 
+  def my
+    @tenants = current_user.tenants
+    render :index
+  end
+
   def show; end
 
   def new
@@ -16,12 +21,12 @@ class TenantsController < ApplicationController
   def create
     @tenant = Tenant.new(tenant_params)
 
-    render :new, status: :unprocessable_entity unless @tenant.save
+    return render :new, status: :unprocessable_entity unless @tenant.save
     redirect_to tenant_url(@tenant), notice: 'Tenant was successfully created.'
   end
 
   def update
-    render :edit, status: :unprocessable_entity unless @tenant.update(tenant_params)
+    return render :edit, status: :unprocessable_entity unless @tenant.update(tenant_params)
     redirect_to tenant_url(@tenant), notice: 'Tenant was successfully updated.'
   end
 
