@@ -1,5 +1,5 @@
 class TenantsController < ApplicationController
-  before_action :set_tenant, only: %i[ show edit update destroy ]
+  before_action :set_tenant, only: %i[show edit update destroy]
 
   def index
     @tenants = Tenant.all
@@ -22,11 +22,13 @@ class TenantsController < ApplicationController
     @tenant = Tenant.new(tenant_params)
 
     return render :new, status: :unprocessable_entity unless @tenant.save
+
     redirect_to tenant_url(@tenant), notice: 'Tenant was successfully created.'
   end
 
   def update
     return render :edit, status: :unprocessable_entity unless @tenant.update(tenant_params)
+
     redirect_to tenant_url(@tenant), notice: 'Tenant was successfully updated.'
   end
 

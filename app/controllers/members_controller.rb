@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: %i[ show edit update destroy ]
+  before_action :set_member, only: %i[show edit update destroy]
 
   def index
     @members = Member.all
@@ -17,6 +17,7 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
 
     return render :new, status: :unprocessable_entity unless @member.save!
+
     @member = Member.create!(tenant: @tenant, user: current_user)
     redirect_to member_url(@member), notice: 'Member was successfully created.'
   end
