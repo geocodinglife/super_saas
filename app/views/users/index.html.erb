@@ -10,8 +10,10 @@
 <table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
-      <th>id</th>
-      <th>email</th>
+      <th>Id</th>
+      <th>Email</th>
+      <th>Tenants</th>
+      <th>Accepted Invitation?</th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +24,28 @@
         </td>
         <td>
           <%= user.email %>
+        </td>
+        <td>
+          <%= user.tenants.compact.join(',') %>
+        </td>
+        <td>
+          <% if user.created_by_invite? %>
+            <span class="badge bg-secondary">
+               created_by_invite
+            </span>
+
+             <% if user.invitation_accepted_at.present? %>
+               <%= user.invitation_accepted_at %>
+               <span class="badge bg-secondary">
+                 invitation accepted
+               </span>
+             <% else %>
+
+               <span class="badge bg-secondary">
+               <%= button_to 'Resend Invitation', resend_invitation_user_path(user.id), method: :patch %>
+               </span>
+             <% end %>
+          <% end %>
         </td>
       </tr>
     <% end %>

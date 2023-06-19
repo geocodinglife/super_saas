@@ -5,6 +5,27 @@ class MembersController < ApplicationController
     @members = Member.all
   end
 
+  def invite
+    current_tenant = Tenant.first
+    email = params[:email]
+    user_from_email = User.where(email: email).first
+
+    if user_from_email.present?
+
+      if Member.where(user: user_from_email, tenant: current_tenant).any?
+        redirect_to members_path, alert: "The organization email: #{current_tenant.name}, already has a user with the email: #{email}"
+      else
+        Member.create!(user: user_from_email, tenant: current_tenant)
+
+        redirect_to members_path, notice: "#{email} whas invited to join the organization #{current_tenant.name}"
+      end
+    elsif user_from_email.nil? # invite new user who a tenant
+      new_user = User.invite!(email: email)
+      Member.create!(user: new_user, tenant: current_tenant)
+      redirect_to members_path, notice: "#{email} was invited to join the tenant: #{current_tenant}"
+    end
+  end
+
   def show; end
 
   def new
