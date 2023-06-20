@@ -8,7 +8,7 @@ class MembersController < ApplicationController
   def invite
     current_tenant = Tenant.first
     email = params[:email]
-    user = User.find_or_invite_by_email(email)
+    user = User.find_or_invite_by_email(email, current_user)
 
     # TODO: pendint to add error message when user has the email address already
     return redirect_to members_path,

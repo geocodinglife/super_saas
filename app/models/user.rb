@@ -7,11 +7,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :invitable
 
-  def self.find_or_invite_by_email(email)
+  def self.find_or_invite_by_email(email, current_user)
     user = find_by(email:)
     return user if user.present?
-
-    invite!(email:)
+    # Invite this person email and is invited by this user.
+    invite!({ email: email }, current_user)
   end
 
   def invite_to_tenant?(tenant)
