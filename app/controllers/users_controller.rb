@@ -6,10 +6,12 @@ class UsersController < ApplicationController
   end
 
   def resend_invitation
-    return  redirect_to users_path,
-      alert: "User with eamil: \
-              #{@user.email} has already accepted \
-              the invitation" if @user.invitation_accepted_at.present?
+    if @user.invitation_accepted_at.present?
+      return redirect_to users_path,
+                         alert: "User with eamil: \
+                #{@user.email} has already accepted \
+                the invitation"
+    end
 
     @user.invite!
     redirect_to users_path, notice: "Invitation resend to #{@user.email} "
