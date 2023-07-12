@@ -17,7 +17,7 @@ gem 'simple_form'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-
+gem 'acts_as_tenant', '~> 0.6.1'
 # gem "image_processing", "~> 1.2"
 # gem "sassc-rails"
 group :development, :test do

@@ -6,6 +6,15 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <% if current_user %>
       <ul class="navbar-nav me-auto">
+        <div class="nav-link">
+          <%= current_tenant %>
+        </div>
+        <div class="nav-link">
+          <%= current_tenant.id %>
+        </div>
+        <div class="nav-link">
+          <%= current_tenant.name %>
+        </div>
         <li class="nav-item <%= 'active font-weight-bold' if current_page?(root_path) %>">
           <%= link_to root_path, class: 'nav-link' do %>
             <i class="fa fa-home"></i>
