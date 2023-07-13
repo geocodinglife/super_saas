@@ -8,17 +8,20 @@ class MembersController < ApplicationController
   def invite
     current_tenant = Tenant.first
     email = params[:email]
-    user = User.find_or_invite_by_email(email, current_user)
-
-    # TODO: pendint to add error message when user has the email address already
-    return redirect_to members_path,
-      alert: "#{email} was invited to join \
-             the organization #{current_tenant.name}" if user.invite_to_tenant?(current_tenant)
-
-    user.invite_to_tenant(current_tenant)
-    redirect_to members_path,
-                notice: "#{email} was invited to join \
-                        the organization #{current_tenant.name}"
+    user_from_email = User.where(email: email).first
+    if user_from_email.present? #user exists in the database
+      if Member.where(user: user_from_email).any? #user is a member in current_tenant
+        redirect_to members_path, alert: "The organization #{current_tenant.name} already has a user with the email #{email}"
+      else #user is not a member of current_tenant
+        Member.create!(user: user_from_email) #create member for existing user
+        redirect_to members_path, notice: "#{email} was invited to join the organization #{current_tenant.name}"
+        #send email that user was invited to this tenant
+      end
+    elsif user_from_email.nil? #invite new user to a tenant
+      new_user = User.invite!({ email: email }, current_user) #devise invitable create user and send email. invited_by current_user
+      Member.create!(user: new_user) #make new user part of this tenant
+      redirect_to members_path, notice: "#{email} was invited to join the tenant #{current_tenant.name}"
+    end
   end
 
   def show; end
@@ -57,6 +60,6 @@ class MembersController < ApplicationController
   end
 
   def member_params
-    params.require(:member).permit(:user_id, :tenant_id)
+    params.require(:member).permit(:user_id)
   end
 end
